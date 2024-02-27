@@ -1,0 +1,25 @@
+(function( $ ) {
+	var bookingForm = $('.js-booking-form');
+	var tourBookingHandler = function (e) {
+		e.preventDefault();
+		var tourData = bookingForm.serializeArray();
+		console.log(tourData);
+
+		$.ajax({
+			type: 'post',
+			url: tour_vars['url'],
+			data: {
+				action: 'goto_ajax_booking_tour',
+				_ajax_nonce: tour_vars['nonce'],
+				data: tourData,
+			},
+			success: function (response) {
+				console.log(response);
+				window.location.href = tour_vars['redirect_url'];
+			}
+		});
+	};
+
+	// Listen for submit event
+	bookingForm.on('submit', tourBookingHandler);
+})(jQuery);
